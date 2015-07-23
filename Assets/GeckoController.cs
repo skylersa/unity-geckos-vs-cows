@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CowController : MonoBehaviour {
+public class GeckoController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -10,6 +10,6 @@ public class CowController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//transform.position += new Vector3 (5f, 0f, 0f) * Time.deltaTime;
+	
 	}
 }

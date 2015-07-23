@@ -9,6 +9,9 @@ public class SpawnController : MonoBehaviour {
 	}
 	
 	void Spawn () {
-		Instantiate (prefab, transform.position, transform.rotation);
+		GameObject clone = Instantiate (prefab, transform.position, transform.rotation) as GameObject;
+		clone.transform.rotation = Quaternion.identity;
+		Rigidbody rb = clone.GetComponent<Rigidbody> ();
+		rb.velocity = transform.up;
 	}
 }

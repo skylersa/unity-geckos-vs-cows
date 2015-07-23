@@ -10,7 +10,7 @@ public class MacheteController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position += new Vector3 (0f, 5f, 0f) * Time.deltaTime;
+		//transform.position += new Vector3 (0f, 5f, 0f) * Time.deltaTime;
 
 		float angle = 300f * Time.time; 
 		transform.rotation = Quaternion.Euler (new Vector3 (0f, 0f, angle));
