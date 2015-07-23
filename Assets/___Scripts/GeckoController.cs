@@ -3,13 +3,12 @@ using System.Collections;
 
 public class GeckoController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	void OnTriggerEnter2D(Collider2D other) {
+		if(other.CompareTag("Enemy")){
+			Quaternion rotation = Quaternion.LookRotation
+				(other.transform.position - transform.position, transform.TransformDirection(Vector3.back));
+			transform.rotation = new Quaternion(0, 0, rotation.z, rotation.w);
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
