@@ -3,12 +3,13 @@ using System.Collections;
 
 public class MacheteController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.CompareTag ("Enemy")) {
+			Destroy (other.gameObject);
+			Destroy (gameObject);
+		}
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		//transform.position += new Vector3 (0f, 5f, 0f) * Time.deltaTime;
 
