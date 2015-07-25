@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GeckoController : MonoBehaviour {
+public class MacheteGeckoController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if(other.CompareTag("Enemy")){
