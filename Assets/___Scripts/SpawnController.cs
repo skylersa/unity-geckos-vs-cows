@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class SpawnController : MonoBehaviour {
+
 	public GameObject prefab;
 	public float rate = 1f;
 	public float velocity = 1f;
-	
 
 	void Start () {
 		InvokeRepeating ("Spawn", 0f, rate);
