@@ -10,6 +10,7 @@ public class WeaponController : MonoBehaviour {
 		if (other.CompareTag ("Enemy")) {
 			GameObject clone = Instantiate (explosionprefab);
 			clone.transform.position = transform.position;
+			MoneyTextController.AddMoney(1);
 			Destroy (other.gameObject);
 			durability -= 1;
 			if (durability <= 0) {
