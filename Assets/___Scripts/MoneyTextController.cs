@@ -21,7 +21,7 @@ public class MoneyTextController : MonoBehaviour {
 	}
 	
 	public void ResetScore() {
-		money = 0;
+		money = 650;
 		UpdateText ();
 	}
 	
