@@ -13,12 +13,15 @@ public class GeckoPlacementController : MonoBehaviour {
 	
 	void Update () {
 		if (Input.GetMouseButtonDown (0)) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			float distance;
-			playerPlane.Raycast (ray, out distance);
-			Vector3 pos = ray.GetPoint(distance);
-			pos.z = transform.position.z;
-			Instantiate(macheteGeckoPrefab, pos,Quaternion.identity);
+			if (MoneyTextController.AvaialbleMoney() >= 300) {
+				MoneyTextController.AddMoney(-300);
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				float distance;
+				playerPlane.Raycast (ray, out distance);
+				Vector3 pos = ray.GetPoint(distance);
+				pos.z = transform.position.z;
+				Instantiate(macheteGeckoPrefab, pos,Quaternion.identity);
+			}
 		}
 
 	}

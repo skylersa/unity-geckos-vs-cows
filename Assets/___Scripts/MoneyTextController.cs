@@ -24,7 +24,11 @@ public class MoneyTextController : MonoBehaviour {
 		money = 650;
 		UpdateText ();
 	}
-	
+
+	public static int AvaialbleMoney() {
+		return instance.money;
+	}
+
 	public static void AddMoney(int money) {
 		instance.money += money;
 		instance.UpdateText ();
