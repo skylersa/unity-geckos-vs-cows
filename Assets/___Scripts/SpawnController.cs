@@ -12,6 +12,9 @@ public class SpawnController : MonoBehaviour {
 	}
 	
 	void Spawn () {
+		if (!enabled) {
+			return;
+		}
 		GameObject clone = Instantiate (prefab, transform.position, transform.rotation) as GameObject;
 		clone.transform.rotation = Quaternion.identity;
 		Rigidbody2D rb = clone.GetComponent<Rigidbody2D> ();

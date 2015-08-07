@@ -6,6 +6,10 @@ public class GeckoController : MonoBehaviour {
 	private float speed = 10f;
 	private GameObject target;
 
+	void Start() {
+		gameObject.GetComponent<SpawnController> ().enabled = false;
+	}
+
 	void OnTriggerStay2D(Collider2D other) {
 		if (target == null && other.CompareTag("Enemy")) {
 			target = other.gameObject;
@@ -19,6 +23,7 @@ public class GeckoController : MonoBehaviour {
 	}
 
 	void Update() {
+		gameObject.GetComponent<SpawnController> ().enabled = target != null;
 		if (target != null) {
 			Quaternion rotation = Quaternion.LookRotation
 				(target.transform.position - transform.position, transform.TransformDirection(Vector3.back));
