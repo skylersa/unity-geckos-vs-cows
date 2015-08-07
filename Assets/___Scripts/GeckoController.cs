@@ -3,12 +3,25 @@ using System.Collections;
 
 public class GeckoController : MonoBehaviour {
 
-	float speed = 10f;
+	private float speed = 10f;
+	private GameObject target;
 
 	void OnTriggerStay2D(Collider2D other) {
-		if (other.CompareTag("Enemy")) {
+		if (target == null && other.CompareTag("Enemy")) {
+			target = other.gameObject;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other) {
+		if (target == other.gameObject) {
+			target = null;
+		}
+	}
+
+	void Update() {
+		if (target != null) {
 			Quaternion rotation = Quaternion.LookRotation
-				(other.transform.position - transform.position, transform.TransformDirection(Vector3.back));
+				(target.transform.position - transform.position, transform.TransformDirection(Vector3.back));
 			Quaternion desiredRotation = new Quaternion(0, 0, rotation.z, rotation.w);
 			transform.rotation = Quaternion.Slerp(transform.rotation,desiredRotation, Time.deltaTime * speed); 
 		}
