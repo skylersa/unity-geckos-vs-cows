@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponController : MonoBehaviour {
+public class WeaponController : MonoBehaviour
+{
 
-	public int durability = 4;
-	public GameObject explosionprefab;
+	public int durability = 1;
 
-	void OnTriggerEnter2D(Collider2D other) {
+	void OnTriggerEnter2D (Collider2D other)
+	{
 		if (other.CompareTag ("Enemy")) {
-			GameObject clone = Instantiate (explosionprefab);
-			clone.transform.position = transform.position;
-			MoneyTextController.AddMoney(1);
-			Destroy (other.gameObject);
+			EnemyController controller = other.gameObject.GetComponent<EnemyController> ();
+			controller.TakeHit ();
+
 			durability -= 1;
 			if (durability <= 0) {
 				Destroy (gameObject);
@@ -19,7 +19,8 @@ public class WeaponController : MonoBehaviour {
 		}
 	}
 	
-	void Update () {
+	void Update ()
+	{
 		float angle = 300f * Time.time; 
 		transform.rotation = Quaternion.Euler (new Vector3 (0f, 0f, angle));
 	}
