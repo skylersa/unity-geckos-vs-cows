@@ -18,11 +18,11 @@ public class EnemyController : MonoBehaviour
 		if (--hitpoints <= 0) {
 			GameObject clone = Instantiate (explosionprefab);
 			clone.transform.position = transform.position;
-			MoneyTextController.AddMoney (1);
 			Destroy (gameObject);
 		} else {
 			UpdateText ();
 		}
+		MoneyTextController.AddMoney (1);
 	}
 
 	void Update ()
