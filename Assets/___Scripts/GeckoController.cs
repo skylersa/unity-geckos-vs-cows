@@ -1,34 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GeckoController : MonoBehaviour {
+public class GeckoController : MonoBehaviour
+{
 
-	private float speed = 10f;
+	public float turnSpeed = 30f;
 	private GameObject target;
 
-	void Start() {
+	void Start ()
+	{
 		gameObject.GetComponent<SpawnController> ().enabled = false;
 	}
 
-	void OnTriggerStay2D(Collider2D other) {
-		if (target == null && other.CompareTag("Enemy")) {
+	void OnTriggerStay2D (Collider2D other)
+	{
+		if (target == null && other.CompareTag ("Enemy")) {
 			target = other.gameObject;
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D other) {
+	void OnTriggerExit2D (Collider2D other)
+	{
 		if (target == other.gameObject) {
 			target = null;
 		}
 	}
 
-	void Update() {
+	void Update ()
+	{
 		gameObject.GetComponent<SpawnController> ().enabled = target != null;
 		if (target != null) {
 			Quaternion rotation = Quaternion.LookRotation
-				(target.transform.position - transform.position, transform.TransformDirection(Vector3.back));
-			Quaternion desiredRotation = new Quaternion(0, 0, rotation.z, rotation.w);
-			transform.rotation = Quaternion.Slerp(transform.rotation,desiredRotation, Time.deltaTime * speed); 
+				(target.transform.position - transform.position, transform.TransformDirection (Vector3.back));
+			Quaternion desiredRotation = new Quaternion (0, 0, rotation.z, rotation.w);
+			transform.rotation = Quaternion.Slerp (transform.rotation, desiredRotation, Time.deltaTime * turnSpeed); 
 		}
 	}
 	
