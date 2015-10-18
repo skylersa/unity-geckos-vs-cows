@@ -1,21 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GoButtonController : MonoBehaviour
 {
-
+	public Text timeScaleText;
 	public GameObject spawns;
-	private int speedLevel;
+
+	private static int[] speeds = {0, 1, 2, 4, 8};
+	private int speedIndex;
 
 	void Start ()
 	{
-		spawns.SetActive (false);
+		UpdateTimeScale (0);
+	}
+
+	void UpdateTimeScale (int index)
+	{
+		Time.timeScale = speeds [index];
+		timeScaleText.text = "" + Time.timeScale + "x";
 	}
 
 	public void ClickGoButton ()
 	{
-		spawns.SetActive (true);
-		speedLevel = (speedLevel + 1) % 4;
-		Time.timeScale = Mathf.Pow (2, speedLevel);
+		speedIndex = (speedIndex + 1) % speeds.Length;
+		if (speedIndex == 0) {
+			speedIndex++;
+		}
+		UpdateTimeScale (speedIndex);
 	}
 }
