@@ -4,10 +4,12 @@ using System.Collections;
 public class SpawnController : MonoBehaviour
 {
 
+	public int spawncount = 10;
 	public GameObject[] prefab;
 	public float rate = 1f;
 	public float velocity = 1f;
 
+	private int spawned;
 	void Start ()
 	{
 		InvokeRepeating ("Spawn", 0f, rate);
@@ -18,6 +20,11 @@ public class SpawnController : MonoBehaviour
 		if (!enabled) {
 			return;
 		}
+		if (++spawned > spawncount) {
+			StopAllCoroutines ();
+			return;
+		}
+
 		GameObject clone = Instantiate (prefab [0], transform.position, transform.rotation) as GameObject;
 		clone.transform.parent = transform;
 		clone.transform.rotation = Quaternion.identity;
