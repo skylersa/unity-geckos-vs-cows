@@ -6,22 +6,25 @@ public class GameController : MonoBehaviour
 {
 	public Text leveltext;
 
+	SpawnController[] cowSpawns;
 	int lvl;
 
 	public void NextLevel ()
 	{
 		lvl++;
 		leveltext.text = "Lvl " + lvl;
+
+		foreach (SpawnController controller in cowSpawns) {
+			controller.spawncount = lvl;
+		}
 	}
 
-	// Use this for initialization
 	void Start ()
 	{
 		leveltext.text = "";
-
+		cowSpawns = GetComponentsInChildren<SpawnController> ();
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 	
