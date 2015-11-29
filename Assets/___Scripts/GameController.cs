@@ -4,23 +4,28 @@ using System.Collections;
 
 public class GameController : MonoBehaviour
 {
+	static int[] speeds = {0, 1, 2, 4, 8};
+
 	public GameObject cowSpawnPrefab;
+	public Text timeScaleText;
 	public Text leveltext;
 
+	int speedIndex;
 	int lvl;
 
 	void Start ()
 	{
 		leveltext.text = "";
+		SetTimeScaleIndex (0);
 	}
 
-	void CreateSpawn (int x, int y, int spawnCount)
+	void CreateSpawn (int x, int y, int maxSpawnCount)
 	{
 		GameObject clone = Instantiate (cowSpawnPrefab);
 		clone.transform.SetParent (transform, false);
 		clone.transform.position = new Vector2 (x, y);
 		SpawnController controller = clone.GetComponent<SpawnController> ();
-		controller.spawncount = spawnCount;
+		controller.maxSpawnCount = maxSpawnCount;
 	}
 	
 	public void NextLevel ()
@@ -51,7 +56,25 @@ public class GameController : MonoBehaviour
 
 	void LevelOver ()
 	{
-		Time.timeScale = 0;
+		SetTimeScaleIndex (0);
 	}
 
+	public void ClickGoButton ()
+	{
+		if (Time.timeScale == 0) {
+			NextLevel ();
+		}
+		int newSpeedIndex = (this.speedIndex + 1) % speeds.Length;
+		if (newSpeedIndex == 0) {
+			newSpeedIndex++;
+		}
+		SetTimeScaleIndex (newSpeedIndex);
+	}
+
+	void SetTimeScaleIndex (int newSpeedIndex)
+	{
+		speedIndex = newSpeedIndex;
+		Time.timeScale = speeds [newSpeedIndex];
+		timeScaleText.text = "" + Time.timeScale + "x";
+	}
 }

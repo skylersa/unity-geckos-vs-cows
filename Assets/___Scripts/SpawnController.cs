@@ -4,7 +4,7 @@ using System.Collections;
 public class SpawnController : MonoBehaviour
 {
 
-	public int spawncount = 10;
+	public int maxSpawnCount = 0;
 	public GameObject[] prefab;
 	public float rate = 1f;
 	public float velocity = 1f;
@@ -23,7 +23,7 @@ public class SpawnController : MonoBehaviour
 
 	bool IsDoneSpawning ()
 	{
-		return spawned >= spawncount;
+		return maxSpawnCount > 0 && spawned >= maxSpawnCount;
 	}
 
 	void Spawn ()
