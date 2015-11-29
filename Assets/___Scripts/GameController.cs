@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour
 {
-	static int[] speeds = {0, 1, 2, 4, 8};
+	static int[] speeds = {1, 2, 4, 8};
 
 	public GameObject cowSpawnPrefab;
 	public Text timeScaleText;
@@ -12,11 +12,12 @@ public class GameController : MonoBehaviour
 
 	int speedIndex;
 	int lvl;
+	bool isPlaying;
 
 	void Start ()
 	{
-		leveltext.text = "";
-		SetTimeScaleIndex (0);
+		LevelOver ();
+		InvokeRepeating ("CheckLevelOver", 1f, 1f);
 	}
 
 	void CreateSpawn (int x, int y, int maxSpawnCount)
@@ -28,47 +29,51 @@ public class GameController : MonoBehaviour
 		controller.maxSpawnCount = maxSpawnCount;
 	}
 	
-	public void NextLevel ()
+	public void StartNextLevel ()
 	{
-		lvl++;
-		leveltext.text = "Lvl " + lvl;
+		isPlaying = true;
 
 		CreateSpawn (-9, 1, lvl);
 		CreateSpawn (-9, -1, lvl);
-
-
-		InvokeRepeating ("CheckLevelOver", 1f, 1f);
 	}
 
 	void CheckLevelOver ()
+	{
+		if (isPlaying && IsLevelOver ()) {
+			LevelOver ();
+		}
+	}
+
+	bool IsLevelOver ()
 	{
 		foreach (Transform cowSpawn in transform) {
 			SpawnController controller = cowSpawn.GetComponent<SpawnController> ();
 			if (!controller.IsEntirelyDone ()) {
 				// found a controller that isn't done yet
-				return;
+				return false;
 			}
 		}
-
+		
 		// all controllers are done
-		LevelOver ();
+		return true;
 	}
 
 	void LevelOver ()
 	{
+		isPlaying = false;
 		SetTimeScaleIndex (0);
+
+		lvl++;
+		leveltext.text = "Lvl " + lvl;
 	}
 
 	public void ClickGoButton ()
 	{
-		if (Time.timeScale == 0) {
-			NextLevel ();
+		if (isPlaying) {
+			SetTimeScaleIndex ((this.speedIndex + 1) % speeds.Length);
+		} else {
+			StartNextLevel ();
 		}
-		int newSpeedIndex = (this.speedIndex + 1) % speeds.Length;
-		if (newSpeedIndex == 0) {
-			newSpeedIndex++;
-		}
-		SetTimeScaleIndex (newSpeedIndex);
 	}
 
 	void SetTimeScaleIndex (int newSpeedIndex)
